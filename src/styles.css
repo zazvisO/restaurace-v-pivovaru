@@ -1,0 +1,580 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* Definice proměnných pro barvy a fonty */
+:root {
+  --color-primary-dark: #3a1a1e; /* Hluboká vínová/bordó pro hlavní akcenty */
+  --color-primary-light: #5d2b31;
+  --color-secondary-dark: #2c2c2c; /* Tmavá šedá pro text, pokud je potřeba na světlém pozadí */
+  --color-text-body: #4a4a4a; /* Jemnější šedá pro hlavní text na světlém pozadí */
+  --color-background-main: #fcf8f3; /* Velmi světlý krémový podklad (hlavní obsah) */
+  --color-background-accent: #f0e6da; /* Jemný akcentní podklad (např. hover) */
+  --color-accent-gold: #b79b5c; /* Měděná zlatá pro detaily a aktivní prvky */
+  --color-dark-background: #1f1d1b; /* Tmavé pozadí pro header/navbar/footer */
+  --color-light-text: #ffffff; /* Světlý text pro tmavé pozadí */
+
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+/* Základní styly pro HTML a Body */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background-main); /* Hlavní pozadí stránky */
+  color: var(--color-text-body); /* Základní barva textu */
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+/* ========================================= */
+/* Hlavička (Header) - Tmavý vzhled, menší výška */
+/* ========================================= */
+.header {
+  height: 30vh; /* Zmenšená výška headeru */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Navigace dole */
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  text-align: center;
+  color: var(--color-accent-gold);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Mírně tmavší překrytí pro lepší kontrast s textem */
+  z-index: 1;
+}
+
+/* Jméno restaurace v hlavičce (pouze pokud byste ho chtěli mít viditelné, jinak je v obrázku) */
+/* Pokud header h1 používáte, ujistěte se, že má světlou barvu na tmavém pozadí */
+.header h1 {
+  font-family: var(--font-heading);
+  font-size: 5.5em;
+  margin: 0;
+  letter-spacing: 4px;
+  position: relative;
+  z-index: 2;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+  line-height: 1;
+  color: var(--color-accent-gold);
+}
+
+
+/* ========================================= */
+/* Navigační lišta (Navbar) - Tmavý, elegantní vzhled */
+/* ========================================= */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--color-dark-background); /* Tmavé pozadí pro navigaci */
+  padding: 15px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Výraznější stín */
+  display: flex;
+  justify-content: center;
+  border-bottom: none;
+  width: 100%;
+  position: relative;
+  /* Zde by měla být definována animace slideDown, pokud ji používáte.
+     Ujistěte se, že je definována někde v CSS a je na ní odkazováno v komponentě. */
+  animation: slideDown 0.5s ease-out; /* Příklad použití animace */
+}
+
+/* Animace pro navigační lištu, pokud ji používáte */
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.navbar a {
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-light-text); /* Světlý text odkazů na tmavém pozadí */
+  padding: 10px 20px;
+  margin: 0 10px;
+  position: relative;
+  transition: color 0.3s ease, transform 0.2s ease, background-color 0.2s ease;
+  letter-spacing: 1.2px;
+  border-radius: 4px;
+}
+
+.navbar a:hover {
+  color: var(--color-accent-gold); /* Zlatý text při najetí */
+  background-color: rgba(255, 255, 255, 0.08); /* Jemné, téměř průhledné pozadí při najetí */
+  transform: translateY(-2px);
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-accent-gold); /* Zlaté podtržení */
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.navbar a:hover::after,
+.navbar a.active-link::after {
+  width: 80%;
+}
+
+.navbar a.active-link {
+  color: var(--color-accent-gold); /* Zlatý text pro aktivní odkaz */
+  font-weight: 600;
+}
+
+
+/* ========================================= */
+/* Responzivní design pro Header a Navbar */
+/* ========================================= */
+@media (max-width: 1024px) {
+  .header {
+    height: 45vh; /* Menší na tabletech */
+  }
+  .navbar a {
+    padding: 8px 15px;
+    margin: 0 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 35vh; /* Ještě menší na mobilu */
+    justify-content: flex-end;
+  }
+  .navbar {
+    flex-wrap: wrap;
+    padding: 10px 0;
+    justify-content: center;
+  }
+  .navbar a {
+    margin: 5px 8px;
+    padding: 8px 12px;
+    font-size: 0.85em;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 30vh; /* Velmi malý na malých telefonech */
+  }
+  .navbar a {
+    font-size: 0.8em;
+    padding: 6px 8px;
+    margin: 3px 5px;
+  }
+}
+
+/* ========================================= */
+/* Obsahové sekce - Světlé pozadí */
+/* ========================================= */
+.content-section {
+  background-color: var(--color-light-text); /* Světlé pozadí pro hlavní obsah */
+  padding: 70px 80px;
+  margin: 40px auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.9s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Nadpisy H2 - Hlavní nadpisy sekcí na světlém pozadí */
+h2 {
+  font-family: var(--font-heading);
+  font-size: 3.2em;
+  text-align: center;
+  color: var(--color-primary-dark); /* Tmavá barva pro nadpis */
+  margin-bottom: 50px;
+  position: relative;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 3px;
+  background-color: var(--color-accent-gold); /* Zlaté podtržení */
+}
+
+/* Nadpisy H3 - Podsekce menu na světlém pozadí */
+h3 {
+  font-family: var(--font-heading);
+  font-size: 2em;
+  color: var(--color-secondary-dark); /* Tmavá barva pro podnadpis */
+  margin-top: 45px;
+  margin-bottom: 25px;
+  position: relative;
+  padding-left: 0;
+  font-weight: 600;
+}
+
+h3::before {
+  content: '\2022'; /* Elegatní tečka */
+  color: var(--color-accent-gold);
+  margin-right: 10px;
+  font-size: 1.2em;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Položky menu na světlém pozadí */
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-background-accent);
+  transition: all 0.25s ease;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:hover {
+  background-color: var(--color-background-main);
+  transform: scale(1.005);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.item-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.25em;
+  color: var(--color-primary-dark);
+  margin-bottom: 5px;
+}
+
+.item-size {
+  font-weight: 400;
+  font-size: 0.9em;
+  color: var(--color-text-body);
+}
+
+.item-description {
+  font-size: 0.9em;
+  color: var(--color-text-body);
+  font-style: italic;
+  margin-top: 5px;
+}
+
+.price {
+  font-family: var(--font-heading);
+  font-size: 1.5em;
+  font-weight: 700;
+  color: var(--color-accent-gold);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  margin-left: 20px;
+}
+
+/* Galerie obrázků */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 50px;
+}
+
+.image-gallery img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================= */
+/* Patička (Footer) - Tmavé pozadí a světlý text */
+/* ========================================= */
+.footer {
+  background-color: var(--color-dark-background); /* Tmavé pozadí pro celou patičku */
+  color: var(--color-light-text); /* Základní barva textu v patičce je světlá */
+  padding: 60px 25px;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+/* Styl pro nadpis H2 uvnitř patičky */
+.footer h2 { /* Není potřeba .contact-info, pokud je H2 přímo pod footerem nebo uvnitř .contact-info */
+  font-family: var(--font-heading);
+  color: var(--color-accent-gold); /* Zlatá barva pro nadpis kontaktů */
+  font-size: 3em;
+  margin-bottom: 30px;
+  position: relative;
+  letter-spacing: 1px;
+}
+
+/* Podtržení H2 v patičce */
+.footer h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 3px;
+  background-color: var(--color-light-text); /* Světlé podtržení na tmavém pozadí */
+}
+
+/* Styly pro odstavce P uvnitř patičky */
+.footer p {
+  font-family: var(--font-body);
+  margin: 10px 0;
+  font-size: 1.1em;
+  font-weight: 300;
+  color: var(--color-light-text); /* Světlý text pro odstavce */
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Styl pro mapu uvnitř patičky */
+.footer .map-container {
+  margin-top: 50px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer .map-container iframe {
+  width: 100%;
+  height: 400px;
+  display: block;
+  border: none;
+}
+
+/* ========================================= */
+/* Salon Info a Historie - textové sekce (světlé pozadí) */
+/* ========================================= */
+.salon-info, .history-content {
+  text-align: center;
+  line-height: 1.7;
+}
+
+.salon-info p, .history-content p {
+  font-size: 1.1em;
+  margin: 25px auto;
+  max-width: 900px;
+  font-weight: 400;
+}
+
+/* ========================================= */
+/* Responzivní design */
+/* ========================================= */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .header {
+    height: 65vh; /* Mírně nižší */
+  }
+
+  .navbar a {
+    padding: 8px 15px;
+    margin: 0 5px;
+  }
+
+  .content-section {
+    padding: 60px 40px;
+  }
+
+  h2 {
+    font-size: 2.8em;
+  }
+
+  h3 {
+    font-size: 1.8em;
+  }
+
+  .menu-item {
+    padding: 18px 0;
+  }
+
+  .item-name {
+    font-size: 1.2em;
+  }
+
+  .price {
+    font-size: 1.3em;
+  }
+
+  .image-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .footer h2 {
+    font-size: 2.5em;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 50vh;
+  }
+  
+  .navbar {
+    flex-wrap: wrap;
+    padding: 10px 0;
+    justify-content: center;
+  }
+  
+  .navbar a {
+    margin: 5px 8px;
+    padding: 8px 12px;
+    font-size: 0.85em;
+  }
+  
+  .content-section {
+    padding: 40px 20px;
+    margin: 30px auto;
+  }
+  
+  h2 {
+    font-size: 2.2em;
+    margin-bottom: 30px;
+  }
+  
+  h3 {
+    font-size: 1.6em;
+    margin-top: 35px;
+    margin-bottom: 20px;
+  }
+  
+  .menu-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 0;
+  }
+
+  .price {
+    margin-top: 10px;
+    margin-left: 0;
+    align-self: flex-end;
+  }
+
+  .image-gallery {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .image-gallery img {
+    height: 250px;
+  }
+  
+  .footer {
+    padding: 40px 20px;
+  }
+
+  .footer h2 {
+    font-size: 2.2em;
+  }
+  
+  .footer .map-container iframe {
+      height: 300px;
+  }
+
+  .salon-info p, .history-content p {
+    font-size: 1em;
+    margin: 15px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+
+  .header h1 { /* Toto se už nepoužívá, ale pro jistotu jsem nechal prázdné */
+    font-size: 2.2em;
+    letter-spacing: 1px;
+  }
+
+  .navbar a {
+    font-size: 0.8em;
+    padding: 6px 8px;
+    margin: 3px 5px;
+  }
+
+  .content-section {
+    padding: 25px 15px;
+    margin: 20px auto;
+  }
+
+  h2 {
+    font-size: 1.8em;
+    margin-bottom: 25px;
+  }
+  
+  h3 {
+    font-size: 1.4em;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  .item-name {
+    font-size: 1.1em;
+  }
+
+  .footer h2 {
+    font-size: 1.8em;
+  }
+  .footer p {
+    font-size: 0.95em;
+  }
+}
